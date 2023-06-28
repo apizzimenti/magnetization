@@ -1,0 +1,14 @@
+{
+    "field": 7,
+    "lattice": [
+        10,
+        10,
+        10
+    ],
+    "experiment": "energy",
+    "started": "2023-06-28 12:49:20",
+    "completed": "2023-06-28 12:49:27",
+    "timeToCompletion": "0:00:00.006616",
+    "steps": "1000",
+    "stepsPerSecond": 151149.43988848763
+}

@@ -8,7 +8,7 @@
 #SBATCH --time=5-00:00:00                       # Automatically set experiments to run for five days.
 #SBATCH --mail-user=apizzime@gmu.edu            # Email me when things start/stop/error/get requeued.
 #SBATCH --mail-type=ALL
-#SBATCH --job-name=potts-test
+#SBATCH --job-name=energy
 
 
 module load gnu10
