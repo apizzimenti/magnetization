@@ -1,0 +1,9 @@
+
+gerrytools
+matplotlib
+numpy
+numba
+galois
+pandas
+scipy
+vprof

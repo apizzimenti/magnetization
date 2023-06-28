@@ -1,0 +1,6 @@
+[submodule "potts"]
+	path = potts
+	url = git@github.com:apizzimenti/potts.git
+[submodule "C++"]
+	path = C++
+	url = git@github.com:apizzimenti/potts-optimized.git
