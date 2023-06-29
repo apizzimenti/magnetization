@@ -7,13 +7,13 @@ from potts.stats import randomizedToConstant
 from potts.utils import Metadata
 
 # Set the order of our coefficient field and the size of the lattice.
-q = 27
-corners = [20, 20, 20]
-steps = 1000
+q = 7
+corners = [100, 100]
+steps = 10000
 
 # Create an integer lattice to experiment on.
 lattice = Lattice(corners=corners, field=q)
-schedule = randomizedToConstant(steps=steps, field=q, distribution=np.random.normal)
+schedule = randomizedToConstant(steps=steps, hold=1/3, field=q, distribution=np.random.normal)
 model = SwendsonWang(temperature=schedule)
 initial = model.initial(lattice)
 
@@ -25,6 +25,5 @@ with Metadata(chain) as metadata:
     for step in chain.progress(): pass
 
 # Write statistics to file.
-# Write statistics to file.
-pd.DataFrame.from_dict(chain.statistics).to_csv("./output/statistics/energy.csv")
+pd.DataFrame.from_dict(chain.statistics).to_csv("./output/statistics/energy.csv", index=False)
 with open("./output/statistics/assignments.json", "w") as w: json.dump(chain.assignments, w)
