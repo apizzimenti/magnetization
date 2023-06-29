@@ -73,8 +73,8 @@ default figures.
 Each of these scripts can be modified to fit your needs.
 
 # Your first experiment
-The workflow for creating and executing new experiments is be outlined more
-explicitly as follows:
+The workflow for creating and executing new experiments goes something like the
+following:
 
 0. If you have _not_ pushed to Hopper, ensure that you've'
 configured an SSH key and have paired it with Hopper. The Hopper URL is
