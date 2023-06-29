@@ -76,12 +76,12 @@ Each of these scripts can be modified to fit your needs.
 The workflow for creating and executing new experiments is be outlined more
 explicitly as follows:
 
-0. If you have _not_ pushed to Hopper, ensure that you have appropriately
+0. If you have _not_ pushed to Hopper, ensure that you've'
 configured an SSH key and have paired it with Hopper. The Hopper URL is
 `hopper.orc.gmu.edu`, your username is your GMU email address's prefix (e.g.
 `apizzime`, from `apizzime@gmu.edu`). [Use this guide](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
 to set up your SSH identity and pair it with Hopper appropriately. Once you've set
-up your SSH environment, ensure that the `user` variable is set appropriately in
+up your SSH environment, ensure that the `user` variable is set to your username in
 each of the root-level scripts (`push`, `env`, and `pull`) and the directories
 specified in each exist. **Note: if you are not connected to the internet on campus,
 [you must connect via the VPN](https://its.gmu.edu/service/virtual-private-network-vpn/).**
