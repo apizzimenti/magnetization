@@ -1,0 +1,13 @@
+{
+    "field": 7,
+    "lattice": [
+        20,
+        20
+    ],
+    "experiment": "small-lattice",
+    "stepsPerSecond": 17703567.191733126,
+    "started": "2023-06-28 23:31:05",
+    "completed": "2023-06-28 23:31:11",
+    "timeToCompletion": "0:00:00.005649",
+    "steps": "100000"
+}
