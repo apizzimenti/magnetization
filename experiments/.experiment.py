@@ -25,6 +25,5 @@ with Metadata(chain) as metadata:
     for step in chain.progress(): pass
 
 # Write statistics to file.
-# Write statistics to file.
-pd.DataFrame.from_dict(chain.statistics).to_csv("./output/statistics/energy.csv")
+pd.DataFrame.from_dict(chain.statistics).to_csv("./output/statistics/energy.csv", index=False)
 with open("./output/statistics/assignments.json", "w") as w: json.dump(chain.assignments, w)
