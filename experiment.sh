@@ -42,5 +42,6 @@ echo "$slurm" >> $directory/job.slurm
 echo "sbatch job.slurm" >> $directory/submit.sh
 chmod +x $directory/submit.sh
 
-# Create a default "experiments.py" root.
+# Create a default "experiments.py" root and copy a couple of scripts.
 cp ./experiments/.experiment.py $directory/experiment.py
+cp -r ./experiments/.scripts $directory/scripts
