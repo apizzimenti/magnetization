@@ -1,6 +1,10 @@
 #!/bin/bash
-
 user=apizzime
+
+# If we have no arguments, abort; we don't want to overwrite other experiments.
+if [ $# -eq 0 ]; then
+    exit 1
+fi
 
 # Set options and exchange files.
 OPTIONS="--verbose --recursive --update"
