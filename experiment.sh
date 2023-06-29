@@ -18,6 +18,7 @@ mkdir $directory
 # directories.
 mkdir $directory/output
 mkdir $directory/output/figures
+mkdir $directory/output/figures/lattices
 mkdir $directory/output/statistics
 mkdir $directory/output/slurm
 mkdir $directory/output/slurm/output
