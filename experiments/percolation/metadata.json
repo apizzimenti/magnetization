@@ -1,0 +1,13 @@
+{
+    "field": 2,
+    "lattice": [
+        32,
+        32
+    ],
+    "experiment": "percolation",
+    "stepsPerSecond": 197892.9560686832,
+    "started": "2023-09-14 15:37:56",
+    "completed": "2023-09-14 15:38:01",
+    "timeToCompletion": "0:00:00.005053",
+    "steps": "1000"
+}

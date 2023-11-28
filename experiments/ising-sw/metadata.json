@@ -1,0 +1,13 @@
+{
+    "field": 2,
+    "lattice": [
+        32,
+        32
+    ],
+    "experiment": "clock",
+    "stepsPerSecond": 132072.66089709883,
+    "started": "2023-10-03 10:25:14",
+    "completed": "2023-10-03 10:25:21",
+    "timeToCompletion": "0:00:00.007572",
+    "steps": "1000"
+}
