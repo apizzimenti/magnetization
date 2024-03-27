@@ -27,7 +27,7 @@ mkdir $directory/output/slurm/errors
 # Metadata.
 metadata="$(cat ./experiments/.metadata.json)"
 metadata="${metadata}\n\t\"experiment\": \"${experiment}\"\n}"
-echo "$metadata" >> $directory/metadata.json
+echo "$metadata" >> $directory/.metadata.json
 
 # Add some stuff to the header for the job submission file.
 header="$(cat ./experiments/.default-slurm-header.txt)"
@@ -45,5 +45,6 @@ chmod +x $directory/submit.sh
 
 # Create a default "experiments.py" root and copy a couple of scripts.
 cp ./experiments/.experiment.py $directory/experiment.py
+cp ./experiments/.lattice.py $directory/lattice.py
 cp -r ./experiments/.scripts $directory/scripts
 cp ./experiments/.figures.sh $directory/figures.sh

@@ -1,5 +1,4 @@
 
-gerrytools
 matplotlib
 numpy
 numba
@@ -7,3 +6,10 @@ galois
 pandas
 scipy
 vprof
+rustworkx
+cython
+jsonlines
+gzip
+dateutil
+datetime
+time

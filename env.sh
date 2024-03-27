@@ -15,6 +15,12 @@ module load python
 # Install requirements LOCALLY.
 requirements=$(cat requirements.txt)
 pip install $requirements -t $PYTHONPATH
+
+# Build changes to code.
+cd ~/projects/magnetization/potts/
+python setup.py build_ext --inplace
+
+# symlink to the library folder.
 ln -s ~/projects/magnetization/potts/potts $PYTHONPATH/potts
 
 # Unload modules.
