@@ -1,29 +1,52 @@
 
-import pandas as pd
-import numpy as np
-import json
-from potts import Lattice, SwendsonWang, Chain
-from potts.stats import randomizedToConstant
-from potts.utils import Metadata
+import dateutil.relativedelta, time, datetime, json
+from potts import Lattice, SwendsenWang, Chain, constant, Tape
 
-# Set the order of our coefficient field and the size of the lattice.
-q = 7
-corners = [20, 20]
-steps = 1000
+# Construct lattice object.
+L = Lattice()
+L.fromFile("lattice.json")
 
-# Create an integer lattice to experiment on.
-lattice = Lattice(corners=corners, field=q)
-schedule = randomizedToConstant(steps=steps, field=q, distribution=np.random.normal)
-model = SwendsonWang(temperature=schedule)
-initial = model.initial(lattice)
+# Set up Model and Chain.
+SW = SwendsenWang(L, temperatureFunction=constant(-0.441))
+N = 1000
+M = Chain(SW, steps=N)
 
-# Create a chain and iterate, stashing information as we go.
-chain = Chain(lattice, model, initial=initial, sampleInterval=50, steps=steps)
+# Metadata.
+start = time.time()
 
-# Step through the chain.
-with Metadata(chain) as metadata:
-    for step in chain.progress(): pass
+r = Tape.Recorder()
+fp = f"{int(start)}.jsonl.gz"
+compressed = True
 
-# Write statistics to file.
-pd.DataFrame.from_dict(chain.statistics).to_csv("./output/statistics/energy.csv", index=False)
-with open("./output/statistics/assignments.json", "w") as w: json.dump(chain.assignments, w)
+with r.record(M, fp, compressed=compressed) as r:
+    for state in M.progress(): r.store(state)
+
+end = time.time()
+ttc = end-start
+
+# Write metadata to file.
+with open(".metadata.json", "r") as r: metadata = json.load(r)
+with open(f"metadata-{int(start)}.json", "w") as w:
+    # Dates and times and stuff.
+    dtstart = datetime.datetime.fromtimestamp(start)
+    dtend = datetime.datetime.fromtimestamp(end)
+    dtttc = dateutil.relativedelta.relativedelta(dtend, dtstart)
+
+    metadata["start"] = datetime.datetime.fromtimestamp(start).strftime("%Y-%m-%d %H:%M:%S")
+    metadata["end"] = datetime.datetime.fromtimestamp(end).strftime("%Y-%m-%d %H:%M:%S")
+    metadata["ttc"] = "%d-%d-%d %d:%d:%d" % (dtttc.years, dtttc.months, dtttc.days, dtttc.hours, dtttc.minutes, dtttc.seconds)
+    metadata["tape"] = fp
+    metadata["compressed"] = compressed
+
+    # Computational things.
+    metadata["iterations"] = N
+
+    C = list(sum([f.encoding for f in L.faces], ()))[-1]
+    metadata["lattice"] = [c+1 for c in C]
+    metadata["dimension"] = M.model.lattice.dimension
+    metadata["field"] = M.model.lattice.field.order
+    metadata["periodicBoundaryConditions"] = int(M.model.lattice.periodicBoundaryConditions)
+    metadata["model"] = M.model.name
+
+    # Write to file.
+    json.dump(metadata, w, indent=2)
