@@ -34,7 +34,7 @@ with open(f"metadata-{int(start)}.json", "w") as w:
 
     metadata["start"] = datetime.datetime.fromtimestamp(start).strftime("%Y-%m-%d %H:%M:%S")
     metadata["end"] = datetime.datetime.fromtimestamp(end).strftime("%Y-%m-%d %H:%M:%S")
-    metadata["ttc"] = "%d-%d-%d %d:%d:%d" % (dtttc.years, dtttc.months, dtttc.days, dtttc.hours, dtttc.minutes, dtttc.seconds)
+    metadata["ttc"] = "%dY-%dM-%dD %dh:%dm:%ds" % (dtttc.years, dtttc.months, dtttc.days, dtttc.hours, dtttc.minutes, dtttc.seconds)
     metadata["tape"] = fp
     metadata["compressed"] = compressed
 
