@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/home/apizzime/projects/magnetization/experiments/percolation/experiment.py", line 17, in <module>
-    model = GraphPercolation(temperatureFunction=constant(math.ln(2)))
-AttributeError: module 'math' has no attribute 'ln'
