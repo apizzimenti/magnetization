@@ -1,16 +1,34 @@
 #!/bin/bash
 
-user=apizzime
+# Create optstring so we can just pass one argument and everything's parameterized.
+OPTSTRING="hpb"
+build=false
+
+while getopts ${OPTSTRING} opt; do
+  case ${opt} in
+    h)
+      source .hopper && export $(grep --regexp ^[A-Z] .hopper | cut -d= -f1)
+      ;;
+    p)
+      source .pangolin && export export $(grep --regexp ^[A-Z] .pangolin | cut -d= -f1)
+      ;;
+    b)
+      build=true
+    ?)
+      echo "Invalid option."
+      exit 1
+      ;;
+  esac
+done
 
 # Set options and exchange files.
-OPTIONS="--verbose --human-readable --delete --recursive --update"
-IGNORE="--exclude=C++ --exclude=notes --exclude=potts/.json --exclude=*/__pycache__ --exclude=*.DS_Store --exclude=potts/.git --exclude=*.egg-info"
-IGNORE="--exclude=.vscode --exclude=*.pytest* --exclude=*.python-version --exclude=potts/test/output/*.txt $IGNORE"
-IGNORE="--exclude=potts/test/output/figures/* --exclude=potts/test/output/matrices/* --exclude=potts/test/output/profiles/* $IGNORE"
-IGNORE="--exclude=.git --exclude=*.png --exclude=*.pdf --exclude=*.jpg --exclude=Talks/* $IGNORE"
-IGNORE="--exclude=*/build/* $IGNORE"
+OPTIONS="--exclude-from=.$REMOTEHOST.ignore --verbose --human-readable --delete --recursive --update"
 
-# Push to the server and build.
-echo "pushing via rsync with arguments $OPTIONS and ignoring $IGNORE"
-rsync $OPTIONS $IGNORE ./ $user@gmu-hopper:/home/$user/projects/magnetization
-ssh $user@gmu-hopper 'bash -s' < build.sh
+# Push to the specified server.
+echo "pushing to $REMOTEUSER@$REMOTELOCATION via rsync with arguments $OPTIONS and ignoring from .ignore"
+rsync $OPTIONS ./ $REMOTEUSER@$REMOTELOCATION:/home/$REMOTEUSER/projects/magnetization
+
+# Optionally build.
+if [ "$build" = true ]; then
+  ssh $REMOTEUSER@$REMOTELOCATION 'bash -s' < $REMOTEBUILDACTION
+fi

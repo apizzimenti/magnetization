@@ -1,5 +1,5 @@
 
-from potts import Lattice
+from ateam.structures import Lattice
 
 # Create the lattice we're operating on.
 L = Lattice()

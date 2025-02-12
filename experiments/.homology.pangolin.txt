@@ -1,0 +1,5 @@
+
+cd ./scripts/data
+
+python isNullHomologous.py
+python _isNullHomologous.py

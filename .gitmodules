@@ -1,6 +1,7 @@
-[submodule "potts"]
-	path = potts
-	url = git@github.com:apizzimenti/potts.git
-[submodule "C++"]
-	path = C++
-	url = git@github.com:apizzimenti/potts-optimized.git
+[submodule "ATEAM"]
+	path = ATEAM
+	url = git@github.com:apizzimenti/ATEAM.git
+
+[submodule "4torus-sw-2"]
+	path = experiments/4torus-sw-2
+	url = git@github.com:apizzimenti/4torus-sw-2.git

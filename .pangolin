@@ -1,0 +1,4 @@
+REMOTEUSER=anthony
+REMOTELOCATION=gmu-pangolin
+REMOTEHOST=pangolin
+REMOTEBUILDACTION=pangolin.env.sh
