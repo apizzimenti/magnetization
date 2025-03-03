@@ -2,7 +2,7 @@
 
 # Create optstring so we can just pass one argument and everything's parameterized.
 OPTSTRING="hpb"
-build=false
+build=true
 
 while getopts ${OPTSTRING} opt; do
   case ${opt} in
@@ -12,8 +12,6 @@ while getopts ${OPTSTRING} opt; do
     p)
       source .pangolin && export export $(grep --regexp ^[A-Z] .pangolin | cut -d= -f1)
       ;;
-    b)
-      build=true
     ?)
       echo "Invalid option."
       exit 1

@@ -10,7 +10,7 @@ pip install wheel setuptools pybind11
 pip install --use-deprecated=legacy-resolver --no-binary :all: phat
 
 # Build changes to code.
-cd ~/projects/magnetization/ATEAM/
+cd ~/projects/magnetization/ATEAMS/
 make
 
 # Local install.

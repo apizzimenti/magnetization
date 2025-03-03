@@ -2,9 +2,9 @@
 import numpy as np
 import math
 import dateutil.relativedelta, time, datetime, json, pathlib, sys, platform
-from ateam.structures import Lattice
-from ateam.models import InvadedCluster
-from ateam import Chain, Tape, _version
+from ateams.structures import Lattice
+from ateams.models import InvadedCluster
+from ateams import Chain, Tape, _version
 import sys
 
 # Construct lattice object.

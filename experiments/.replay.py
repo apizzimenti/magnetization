@@ -1,8 +1,8 @@
 
-from ateam.structures import Lattice
-from ateam.models import SwendsenWang
-from ateam.stats import constant, autocorrelation
-from ateam import Chain, Tape, _version
+from ateams.structures import Lattice
+from ateams.models import SwendsenWang
+from ateams.stats import constant, autocorrelation
+from ateams import Chain, Tape, _version
 from pathlib import Path
 import numpy as np
 import json
@@ -52,3 +52,5 @@ with p.playback(SW, fp/"tape.jsonl.gz", outputs=outputs, compressed=compressed) 
     occupied = completes.sum(axis=1)
     autos = autocorrelation(occupied)
     np.savetxt(out/"autocorrelation.gz", autos)
+    
+    with open(out/"metadata.json", "w") as w: json.dump(metadata, w)

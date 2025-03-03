@@ -1,0 +1,5 @@
+
+# Provides arguments for the replay from file.
+while read l; do
+	screen -dm -S replay python replay.py $l
+done < temps.assignment.txt

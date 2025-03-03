@@ -20,11 +20,11 @@ pip install wheel setuptools pybind11
 pip install --use-deprecated=legacy-resolver --no-binary :all: phat
 
 # Build changes to code.
-cd ~/projects/magnetization/ATEAM/
+cd ~/projects/magnetization/ATEAMS/
 python setup.py build_ext --inplace
 
 # symlink to the library folder.
-ln -s ~/projects/magnetization/ATEAM/ateam $PYTHONPATH/ateam
+ln -s ~/projects/magnetization/ATEAMS/ateams $PYTHONPATH/ateams
 
 # Unload modules.
 module unload python

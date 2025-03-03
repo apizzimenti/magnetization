@@ -1,0 +1,3 @@
+
+python lattice.py
+python temps.assignment.py

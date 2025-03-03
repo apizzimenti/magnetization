@@ -1,10 +1,10 @@
 
 import numpy as np
 import dateutil.relativedelta, time, datetime, json, pathlib, sys, platform
-from ateam.structures import Lattice
-from ateam.models import SwendsenWang
-from ateam.stats import constant
-from ateam import Chain, Tape, _version
+from ateams.structures import Lattice
+from ateams.models import SwendsenWang
+from ateams.stats import constant
+from ateams import Chain, Tape, _version
 
 # Construct lattice object.
 L = Lattice()

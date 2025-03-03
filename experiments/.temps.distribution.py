@@ -1,7 +1,7 @@
 
 import numpy as np
-from ateam.structures import Lattice
-from ateam.stats import critical
+from ateams.structures import Lattice
+from ateams.stats import critical
 
 # Construct lattice object.
 L = Lattice()

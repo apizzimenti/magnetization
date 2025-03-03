@@ -1,22 +1,28 @@
 
-C++
-notes
 */**/__pycache__
-*.DS_Store
+.DS_Store
 *.pytest*
 *.python_version
 .git
+.git*
 *.jpeg
 *.png
 *.gif
 
-**/*output/tape/*
-**/*output/statistics/*
-**/*test
-**/*/*.pangolin.*
+output/tape/*
+output/statistics/*
+output/figures
 
-*/**/.vscode
-*/**/*.egg-info
+scripts
+.lattice.lattice.npz
+lattice.json
+*.pangolin*
+.hopper
+.hopper.ignore
+
+.vscode
+*.egg-info
 
 update.sh
 retrieve.sh
+summary.md

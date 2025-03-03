@@ -1,2 +1,8 @@
-python simulate.py $1
-python temps.assignment.py
+
+python lattice.py
+python temps.distribution.py
+
+while read l; do
+	screen -dm -S simulate python simulate.py $l
+done < temps.distribution.txt
+

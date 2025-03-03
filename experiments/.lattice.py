@@ -1,5 +1,5 @@
 
-from ateam.structures import Lattice
+from ateams.structures import Lattice
 
 # Create the lattice we're operating on.
 L = Lattice()

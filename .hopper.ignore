@@ -19,14 +19,11 @@ retrieve.sh
 push.sh
 experiment.sh
 
-experiments/*/output/tape/*
-experiments/*/output/statistics/*
-experiments/test
-experiments/**/*.pangolin.*
+experiments/*
 
 */**/.vscode
 */**/*.egg-info
-ATEAM/build
-ATEAM/docs
-ATEAM/test
-ATEAM/docs.sh
+ATEAMS/build
+ATEAMS/docs
+ATEAMS/test
+ATEAMS/docs.sh

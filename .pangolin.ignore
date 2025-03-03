@@ -26,7 +26,7 @@ experiments/**/*.hopper.*
 
 */**/.vscode
 */**/*.egg-info
-ATEAM/build
-ATEAM/docs
-ATEAM/test
-ATEAM/docs.sh
+ATEAMS/build
+ATEAMS/docs
+ATEAMS/test
+ATEAMS/docs.sh
