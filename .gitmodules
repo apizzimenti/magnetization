@@ -1,6 +1,3 @@
 [submodule "4torus-sw-2"]
 	path = experiments/4torus-sw-2
 	url = git@github.com:apizzimenti/4torus-sw-2.git
-[submodule "ATEAM"]
-	path = ATEAM
-	url = git@github-gmu:apizzimenti/ATEAM.git
