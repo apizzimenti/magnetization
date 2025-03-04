@@ -14,6 +14,9 @@ This code is configured with a specific workflow in mind:
 
 5. do whatever you need with the data _on your machine_.
 
+# Before doing anything...
+**Ensure that the `magnetization` directory contains the entire `ATEAMS` directory.** Otherwise, you will not be able to properly manage and install ATEAMS on remote systems. If you already have an ATEAMS directory on your system and have to move it into `magnetization`, you will likely have to run the ATEAMS `setup.sh` script again to notify your system that a package has moved.
+
 # What's in here?
 
 ## `.` (root)
@@ -81,4 +84,4 @@ The workflow for creating and executing new experiments goes something like the 
 
 7. **On your machine,** use the scripts in `experiments/new-experiment/scripts/` to create figures, reconfigure data, etc.
 
-Lather, rinse, repeat.
+If you want to run experiments on Pangolin, please contact the stewards of this repository.
