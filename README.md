@@ -58,11 +58,11 @@ The root directory contains git configuration files, a Python dependencies file,
 
 * `stamps.py`, which produces a list of subdirectories in the `output/tape/` folder; this is useful for invaded-cluster chains.
 
-* `replay.hopper.slurm` and `replay.hopper.sh`, which replay the chains and store their output in the respective folders;
+* `replay.hopper.slurm` and `replay.hopper.sh`, which replay the chains and store their output in the respective folders.
 
 * `temps.distribution.py` creates a distribution of temperatures and stores them in `temps.distribution.txt`.
 
-* `.metadata.json`, which is prefilled with basic information about the experiment, and is filled with other data when the experiment completes;
+* `.metadata.json`, which is prefilled with basic information about the experiment, and is filled with other data when the experiment completes.
 
 * `scripts/`, a directory for commonly-used scripts (for creating figures, managing output data, etc.) which expect output to exist in `output/`.
 
