@@ -1,0 +1,19 @@
+output/tape/*
+output/statistics/*
+
+.lattice.lattice.npz
+.metadata.json
+lattice.json
+
+stamps.txt
+temps.assignment.txt
+temps.distribution.txt
+
+update.sh
+retrieve.sh
+
+# .hopper*
+.pangolin*
+# *.hopper.sh
+*.pangolin.sh
+# *.slurm

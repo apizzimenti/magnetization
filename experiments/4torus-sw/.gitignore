@@ -1,0 +1,23 @@
+output/tape/*
+output/statistics/*
+
+.lattice.lattice.npz
+.metadata.json
+lattice.json
+
+.DS_Store
+
+stamps.txt
+temps.assignment.txt
+temps.distribution.txt
+
+*pangolin*
+
+# update.sh
+# retrieve.sh
+
+# .hopper*
+# .pangolin*
+# *.hopper.sh
+# *.pangolin.sh
+# *.slurm

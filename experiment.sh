@@ -24,6 +24,11 @@ fi
 directory="./experiments/$experiment"
 mkdir $directory
 
+########################################################################
+## Load arguments from the outer config file to get the user's email. ##
+########################################################################
+source .hopper && export $(grep --regexp ^[A-Z] .hopper | cut -d= -f1)
+
 
 ##############################################
 ## Copies default directories into place.   ##
@@ -32,7 +37,6 @@ mkdir $directory/output
 mkdir $directory/output/figures
 mkdir $directory/output/statistics
 mkdir $directory/output/tape
-
 
 
 
@@ -63,6 +67,7 @@ header="$(cat ./experiments/.default-slurm-header.txt)"
 header="${header}\n#SBATCH --job-name=${experiment}"
 header="${header}\n#SBATCH --output=./output/simulate.output.out"
 header="${header}\n#SBATCH --error=./output/simulate.error.out"
+header="${header}\n#SBATCH --mail-user=${USEREMAIL}"
 
 # Edit footer.
 footer="$(cat ./experiments/.default-slurm-footer.txt)"
@@ -210,5 +215,5 @@ chmod +x $directory/retrieve.sh
 ## Initialize a git repository in the new experiment's folder (in the event) we ##
 ## want to create a submodule out of it for publication.                        ##
 ##################################################################################
-cd $directory
-git init
+# cd $directory
+# git init

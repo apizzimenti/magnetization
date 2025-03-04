@@ -3,5 +3,16 @@
 #SBATCH --nodes=1                               # we should only need one node for this!
 #SBATCH --cpus-per-task=1                       # 8 CPUs will probably suffice.
 #SBATCH --mem-per-cpu=32GB                      # we'll need an assload of memory for dealing with these huge matrices.
+#SBATCH --output=./output/lattice.output.out      # Output diagnostics.
+#SBATCH --error=./output/lattice.error.out        # Output errors.
 #SBATCH --time=5-00:00:00                       # Automatically set experiments to run for five days.
+#SBATCH --mail-user=apizzime@gmu.edu            # Email me when things start/stop/error/get requeued.
 #SBATCH --mail-type=ALL
+#SBATCH --job-name=4torus-homological
+
+
+module load gnu10
+module load python
+export PYTHONPATH=~/lib/python:$PYTHONPATH
+
+python lattice.py
