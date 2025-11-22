@@ -1,4 +1,0 @@
-REMOTEUSER=apizzime
-REMOTELOCATION=gmu-hopper
-REMOTEHOST=hopper
-REMOTEBUILDACTION=hopper.env.sh

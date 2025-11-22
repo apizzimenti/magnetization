@@ -1,29 +1,20 @@
 
-C++
-notes
-*/**/__pycache__
-*.DS_Store
-*.pytest*
-*.python_version
-.git
-*.jpeg
-*.png
-*.gif
-
-Talks
-canon
+ATEAMS
+experiments
+.templates
+libraries
 Papers
+Talks
+
 .git*
-README.md
-retrieve.sh
-push.sh
+.git
+
 experiment.sh
+update.sh
 
-experiments/*
+.pangolin*
+pangolin*
+README.md
 
-*/**/.vscode
-*/**/*.egg-info
-ATEAMS/build
-ATEAMS/docs
-ATEAMS/test
-ATEAMS/docs.sh
+.DS_Store
+.vscode

@@ -1,32 +1,18 @@
 
-C++
-notes
-*/**/__pycache__
-*.DS_Store
-*.pytest*
-*.python_version
-.git
-*.jpeg
-*.png
-*.gif
+ATEAMS
+libraries
+experiments
+.templates
 
-Talks
-canon
 Papers
+Talks
+
 .git*
-README.md
-retrieve.sh
-push.sh
-experiment.sh
+.git
+*.DS_Store
 
-experiments/*/output/tape/*
-experiments/*/output/statistics/*
-experiments/test
-experiments/**/*.hopper.*
+*.md
+.hopper*
+.pangolin*
+*.sh
 
-*/**/.vscode
-*/**/*.egg-info
-ATEAMS/build
-ATEAMS/docs
-ATEAMS/test
-ATEAMS/docs.sh

@@ -1,4 +1,4 @@
-#!/bin/bash
+
 ######################################################################################
 ## EXPERIMENT TEMPLATE                                                              ##
 ##                                                                                  ##
@@ -9,43 +9,49 @@
 ## meet your needs.                                                                 ##
 ######################################################################################
 
+TEMPLATE="./.templates"
+
 ##############################################################################
 ## When executed, takes the first argument as the name of the experiment;   ##
-## otherwise names the experiment after the current datetime.               ##
+## otherwise names the experiment after the current datetime. Takes the     ##
+## second argument as the model used.                                       ##
 ##############################################################################
 experiment=""
 
 if [ $# -eq 0 ]; then
-    experiment="$(date +%s)"
+	experiment="$(date +%s)"
+	MODEL=swendsenwang
 else
-    experiment=$1
+	experiment=$1
+	MODEL=$(echo $2 | tr "[:upper:]" "[:lower:]")
 fi
 
 directory="./experiments/$experiment"
-mkdir $directory
+mkdir -p $directory
 
 ########################################################################
 ## Load arguments from the outer config file to get the user's email. ##
 ########################################################################
-source .hopper && export $(grep --regexp ^[A-Z] .hopper | cut -d= -f1)
+source $TEMPLATE/.pangolin && export $(grep --regexp ^[A-Z] $TEMPLATE/.pangolin | cut -d= -f1)
 
 
 ##############################################
 ## Copies default directories into place.   ##
 ##############################################
-mkdir $directory/output
-mkdir $directory/output/figures
-mkdir $directory/output/statistics
-mkdir $directory/output/tape
+mkdir -p $directory/output
+mkdir -p $directory/output/figures
+mkdir -p $directory/output/statistics
+mkdir -p $directory/output/tape
+mkdir -p complexes
 
 
 
 ##############################################################################
 ## Each individual run (using the `Chain` and `Recorder` classes of ATEAMS) ##
 ## ingests templated JSON and stores data about the computation after it's  ##
-## completed. The `simulate.py` file contains more information.             ##
+## completed. The `simulation.py` file contains more information.             ##
 ##############################################################################
-metadata="$(cat ./experiments/.metadata.json)"
+metadata="$(cat $TEMPLATE/.metadata.json)"
 metadata="${metadata}\n\t\"experiment\": \"${experiment}\"\n}"
 echo "$metadata" >> $directory/.metadata.json
 
@@ -58,56 +64,80 @@ echo "$metadata" >> $directory/.metadata.json
 ## to typical computation tasks.                                                ##
 ##################################################################################
 
+######################
+## Lattice (HOPPER) ##
+######################
+
+# Edit header.
+header="$(cat $TEMPLATE/.default-slurm-header.txt)"
+header="${header}\n#SBATCH --job-name=${experiment}"
+header="${header}\n#SBATCH --output=./output/lattice.output.out"
+header="${header}\n#SBATCH --error=./output/lattice.error.out"
+header="${header}\n#SBATCH --mail-user=${USEREMAIL}"
+
+# Edit footer.
+footer="$(cat $TEMPLATE/.default-slurm-footer.txt)"
+execution="$(cat $TEMPLATE/.lattice.hopper.slurm)"
+footer="${footer}\n\n${execution}"
+
+slurm="${header}\n\n${footer}"
+
+# echo "$slurm" >> $directory/lattice.hopper.slurm
+
+
 #########################
 ## Simulation (HOPPER) ##
 #########################
 
 # Edit header.
-header="$(cat ./experiments/.default-slurm-header.txt)"
+header="$(cat $TEMPLATE/.default-slurm-header.txt)"
 header="${header}\n#SBATCH --job-name=${experiment}"
-header="${header}\n#SBATCH --output=./output/simulate.output.out"
-header="${header}\n#SBATCH --error=./output/simulate.error.out"
+header="${header}\n#SBATCH --output=./output/simulation.output.out"
+header="${header}\n#SBATCH --error=./output/simulation.error.out"
 header="${header}\n#SBATCH --mail-user=${USEREMAIL}"
 
 # Edit footer.
-footer="$(cat ./experiments/.default-slurm-footer.txt)"
-execution="$(cat ./experiments/.simulate.hopper.slurm)"
+footer="$(cat $TEMPLATE/.default-slurm-footer.txt)"
+execution="$(cat $TEMPLATE/.simulation.hopper.slurm)"
 footer="${footer}\n\n${execution}"
 
 # Stitch files together and write.
-hopper="$(cat ./experiments/.simulate.hopper.txt)"
+hopper="$(cat $TEMPLATE/.simulation.hopper.txt)"
 slurm="${header}\n\n${footer}"
 
-echo "$slurm" >> $directory/simulate.hopper.slurm
-echo "$hopper" >> $directory/simulate.hopper.sh
-chmod +x $directory/simulate.hopper.sh
+# echo "$slurm" >> $directory/simulation.hopper.slurm
+# echo "$hopper" >> $directory/simulation.hopper.sh
+# chmod +x $directory/simulation.hopper.sh
 
 
 ###########################
 ## Simulation (Pangolin) ##
 ###########################
-pangolin="$(cat ./experiments/.simulate.pangolin.txt)"
-echo "$pangolin" >> $directory/simulate.pangolin.sh
-chmod +x $directory/simulate.pangolin.sh
+pangolin="$(cat $TEMPLATE/.simulation.pangolin.txt)"
+echo "$pangolin" >> $directory/simulation.pangolin.sh
+chmod +x $directory/simulation.pangolin.sh
 
+manager="$(cat $TEMPLATE/.simulation.manager.pangolin.txt)"
+echo "$manager" >> $directory/simulation.manager.pangolin.sh
+chmod +x $directory/simulation.manager.pangolin.sh
 
 #####################
 ## Replay (HOPPER) ##
 #####################
-header="$(cat ./experiments/.default-slurm-header.txt)"
+header="$(cat $TEMPLATE/.default-slurm-header.txt)"
 header="${header}\n#SBATCH --job-name=${experiment}"
 header="${header}\n#SBATCH --output=./output/replay.output.out"
 header="${header}\n#SBATCH --error=./output/replay.error.out"
 
-footer="$(cat ./experiments/.default-slurm-footer.txt)"
-execution="$(cat ./experiments/.replay.hopper.slurm)"
+footer="$(cat $TEMPLATE/.default-slurm-footer.txt)"
+execution="$(cat $TEMPLATE/.replay.hopper.slurm)"
 footer="${footer}\n\n${execution}"
-hopper="$(cat ./experiments/.replay.hopper.txt)"
+hopper="$(cat $TEMPLATE/.replay.hopper.txt)"
 
 slurm="${header}\n\n${footer}"
-echo "$slurm" >> $directory/replay.hopper.slurm
-echo "$hopper" >> $directory/replay.hopper.sh
-chmod +x $directory/replay.hopper.sh
+# echo "$slurm" >> $directory/replay.hopper.slurm
+# echo "$hopper" >> $directory/replay.hopper.sh
+# chmod +x $directory/replay.hopper.sh
 
 
 
@@ -115,55 +145,14 @@ chmod +x $directory/replay.hopper.sh
 #######################
 ## Replay (Pangolin) ##
 #######################
-pangolin="$(cat ./experiments/.replay.pangolin.txt)"
+pangolin="$(cat $TEMPLATE/.replay.pangolin.txt)"
 echo "$pangolin" >> $directory/replay.pangolin.sh
 chmod +x $directory/replay.pangolin.sh
 
 
-
-
-#######################################
-## Temperature distribution (HOPPER) ##
-#######################################
-header="$(cat ./experiments/.default-slurm-header.txt)"
-header="${header}\n#SBATCH --job-name=${experiment}"
-header="${header}\n#SBATCH --output=./output/temps.distribution.output.out"
-header="${header}\n#SBATCH --error=./output/temps.distribution.error.out"
-
-footer="$(cat ./experiments/.default-slurm-footer.txt)"
-execution="$(cat ./experiments/.temps.distribution.hopper.txt)"
-footer="${footer}\n\n${execution}"
-
-slurm="${header}\n\n${footer}"
-echo "$slurm" >> $directory/temps.distribution.hopper.slurm
-
-
-
-
-#####################################
-## Temperature assignment (HOPPER) ##
-#####################################
-header="$(cat ./experiments/.default-slurm-header.txt)"
-header="${header}\n#SBATCH --job-name=${experiment}"
-header="${header}\n#SBATCH --output=./output/temps.assignment.output.out"
-header="${header}\n#SBATCH --error=./output/temps.assignment.error.out"
-
-footer="$(cat ./experiments/.default-slurm-footer.txt)"
-execution="$(cat ./experiments/.temps.assignment.hopper.txt)"
-footer="${footer}\n\n${execution}"
-
-slurm="${header}\n\n${footer}"
-echo "$slurm" >> $directory/temps.assignment.hopper.slurm
-
-
-
-#####################################
-## Homology computation (Pangolin) ##
-#####################################
-# homology="$(cat ./experiments/.homology.pangolin.txt)"
-# echo "$homology" >> $directory/homology.pangolin.sh
-# chmod +x $directory/homology.pangolin.sh
-
+manager="$(cat $TEMPLATE/.replay.manager.pangolin.txt)"
+echo "$manager" >> $directory/replay.manager.pangolin.sh
+chmod +x $directory/replay.manager.pangolin.sh
 
 
 
@@ -172,18 +161,17 @@ echo "$slurm" >> $directory/temps.assignment.hopper.slurm
 ## Copy template files for lattice creation, temperature distribution and   ##
 ## assignment, simulation, replays, and remote resource configuration.      ##
 ##############################################################################
-cp ./experiments/.simulate.py $directory/simulate.py
-cp ./experiments/.lattice.py $directory/lattice.py
-cp -r ./experiments/.scripts $directory/scripts
-cp ./experiments/.replay.py $directory/replay.py
-cp ./experiments/.summary.md $directory/summary.md
-cp ./experiments/.temps.assignment.py $directory/temps.assignment.py
-cp ./experiments/.temps.distribution.py $directory/temps.distribution.py
-cp ./experiments/.hopper $directory/.hopper
-cp ./experiments/.hopper.ignore $directory/.hopper.ignore
-cp ./experiments/.pangolin $directory/.pangolin
-cp ./experiments/.pangolin.ignore $directory/.pangolin.ignore
-cp ./experiments/.template.gitignore $directory/.gitignore
+cp $TEMPLATE/.$MODEL.py $directory/simulation.py
+cp $TEMPLATE/.construction.py $directory/construction.py
+cp -r $TEMPLATE/.scripts $directory/scripts
+cp $TEMPLATE/.replay.statistics.$MODEL.py $directory/replay.statistics.py
+cp $TEMPLATE/.replay.autocorrelation.$MODEL.py $directory/replay.autocorrelation.py
+cp $TEMPLATE/.summary.md $directory/summary.md
+# cp $TEMPLATE/.hopper $directory/.hopper
+# cp $TEMPLATE/.hopper.ignore $directory/.hopper.ignore
+cp $TEMPLATE/.pangolin $directory/.pangolin
+cp $TEMPLATE/.pangolin.ignore $directory/.pangolin.ignore
+cp $TEMPLATE/.template.gitignore $directory/.gitignore
 
 # Title the experiment file.
 echo "## \`$experiment\`" >> $directory/summary.md
@@ -196,15 +184,14 @@ echo "## \`$experiment\`" >> $directory/summary.md
 ## .pangolin.ignore files. Please ensure you've traded SSH keys with your       ##
 ## remote machines, as these files expect to find SSH keys attached.            ##
 ##################################################################################
-footer="$(cat ./experiments/.update.sh)"
+footer="$(cat $TEMPLATE/.update.sh)"
 footer="${footer}\n\nrsync \$OPTIONS \$IGNORE ./ \$REMOTEUSER@\$REMOTELOCATION:~/projects/magnetization/${directory:2}"
 echo "$footer" >> $directory/update.sh
 chmod +x $directory/update.sh
 
-footer="$(cat ./experiments/.retrieve.sh)"
+footer="$(cat $TEMPLATE/.retrieve.sh)"
 footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:~/projects/magnetization/experiments/${experiment}/output/statistics/ ./output/statistics/"
-footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:~/projects/magnetization/experiments/${experiment}/temps.assignment.txt ./temps.assignment.txt"
-footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:~/projects/magnetization/experiments/${experiment}/stamps.txt ./stamps.txt"
+footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:~/projects/magnetization/experiments/${experiment}/timestamps.txt ./timestamps.txt"
 echo "$footer" >> $directory/retrieve.sh
 chmod +x $directory/retrieve.sh
 

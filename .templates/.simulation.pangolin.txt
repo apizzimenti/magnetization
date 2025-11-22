@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+# Run some default number of copies.
+COPIES=${1:-1}
+SCALES=(16 22 32 45 64 90 128)
+DIMENSION=3
+# SCALES=(16 22)
+
+# Build the complex; wait for it to complete.
+for SCALE in "${SCALES[@]}"; do
+	python construction.py $DIMENSION $SCALE &
+	wait $!
+	echo built complex of scale $SCALE
+done
+
+rm -f timestamps.txt
+
+for SCALE in "${SCALES[@]}"; do
+	for ((i=0; i < $COPIES; i++)); do
+		# Get the current timestamp (number of seconds since the epoch), make a
+		# directory for the output, write the timestamp to timestamps.txt
+		rn=$(date +%s)
+		mkdir -p output/tape/$rn
+		echo $rn >> timestamps.txt
+
+		# Kick off a screen job, but WAIT UNTIL IT COMPLETES before starting a
+		# new one, since there aren't a sufficient number of threads to accommodate
+		# multiple jobs at once. (This should make things go faster.)
+		screen -L -Logfile output/tape/$rn/simulation.log -dmS simulation.$rn python simulation.py $SCALE $rn
+
+		until [[ -f ./output/tape/$rn/metadata.json ]]; do
+			sleep 5
+		done
+
+		echo completed simulation $SCALE $i
+	done
+done

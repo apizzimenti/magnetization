@@ -7,21 +7,11 @@ mkdir $PYTHONPATH
 chmod +rwx $PYTHONPATH
 
 # Load modules.
-module load gnu10
+module load gnu13
 module load python
-
-# Install requirements LOCALLY.
-cd ~/projects/magnetization
-requirements=$(cat requirements)
-
-python -m ensurepip --upgrade
-pip install $requirements -t $PYTHONPATH
-pip install wheel setuptools pybind11
-pip install --use-deprecated=legacy-resolver --no-binary :all: phat
 
 # Build changes to code.
 cd ~/projects/magnetization/ATEAMS/
-# python setup.py build_ext --inplace
 make build
 
 # symlink to the library folder.
@@ -30,4 +20,4 @@ ln -s ~/projects/magnetization/ATEAMS/ateams $PYTHONPATH/ateams
 
 # Unload modules.
 module unload python
-module unload gnu10
+module unload gnu13

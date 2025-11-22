@@ -1,2 +1,0 @@
-python lattice.py
-python temps.distribution.py
