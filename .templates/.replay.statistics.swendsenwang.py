@@ -32,7 +32,7 @@ statistics = [
 ]
 
 # Specify a burn-in.
-BURN = 0
+BURN = int(0.25*N)
 SAMPLE = N-BURN
 
 # Compute stats, do whatever.

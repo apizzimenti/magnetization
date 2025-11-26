@@ -1,5 +1,6 @@
 
-Code for computing experiments on the Potts and Ising models.
+Code for conducting experiments with ATEAMS, including facilities for working on
+remote machines.
 
 # how does this repository work?
 This code is configured with a specific workflow in mind:

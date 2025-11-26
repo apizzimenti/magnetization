@@ -66,5 +66,5 @@ with open(str(output/"metadata.json"), "w") as w:
 	metadata["periodic"] = int(COMPLEX.periodic)
 	metadata["model"] = MODEL._name
 	metadata["full"] = FULL
-
+	
 	json.dump(metadata, w, indent=2)
