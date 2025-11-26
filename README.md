@@ -1,6 +1,7 @@
 
-Code for conducting experiments with ATEAMS, including facilities for working on
-remote machines.
+Code for conducting experiments with ATEAMS, including facilities for working on remote machines.
+
+# WARNING: the information below is out-of-date. We will publish updated documentation soon.
 
 # how does this repository work?
 This code is configured with a specific workflow in mind:
@@ -15,18 +16,15 @@ This code is configured with a specific workflow in mind:
 
 5. do whatever you need with the data _on your machine_.
 
-# Before doing anything...
-**Ensure that the `magnetization` directory contains the entire `ATEAMS` directory.** Otherwise, you will not be able to properly manage and install ATEAMS on remote systems. If you already have an ATEAMS directory on your system and have to move it into `magnetization`, you will likely have to run the ATEAMS `setup.sh` script again to notify your system that a package has moved.
-
 # What's in here?
 
 ## `.` (root)
-The root directory contains git configuration files, a Python dependencies file, this README, and:
+The root directory contains git configuration files, this README, and:
 
-* `push.sh`, which sends _required_ data (save for some ignored files) in this directory and all its subdirectories to the cluster, then installs and compiles `ATEAMS` and its dependencies. To decide with which computer we're exchanging data, this program takes `-h` (for Hopper) or `-p` (for Pangolin) as argument; for example, to set up this template project on Hopper, we would run `$ sh push.sh -h` from the root directory. 
-    * **Warning: if you already have files in the `projects/magnetization/` directory on Hopper (e.g. experiment results, changes to `ATEAMS`, etc.), running this program may delete them.**
+* `update.sh`, which sends _required_ data (save for some ignored files) in this directory and all its subdirectories to the cluster, then installs and compiles `ATEAMS` and its dependencies. To decide with which computer we're exchanging data, this program takes `-h` (for Hopper) or `-p` (for Pangolin) as argument; for example, to set up this template project on Hopper, we would run `$ ./update.sh -h` from the root directory. 
+    * **Warning: if you already have files in the `projects/magnetization/` directory on Hopper (e.g. experiment results), running this program may delete them.**
 
-* `experiment.sh`, which (optionally) takes an experiment name as argument and generates the skeleton for a new experiment in the `experiments/` directory. For example, running `$ sh experiment.py test` will create the directory `./experiments/test` and will populate it with default implementations of required files; see the `experiments/` section below for more information.
+* `experiment.sh`, which (optionally) takes an experiment name and a model as arguments and generates the skeleton for a new experiment in the `experiments/` directory. For example, running `$ ./experiment.py test invadedcluster` will create the directory `./experiments/test` and will populate it with default implementations of required files; see the `experiments/` section below for more information.
 
 * `.hopper` and `.hopper.ignore` are configuration files for sending data to and from Hopper: the first configures your username, email, SSH credentials, and a "remote build action" (i.e. how to install/compile `ATEAMS`) for the Hopper cluster; the second tells `push.sh` what files to ignore when you run it.
 
