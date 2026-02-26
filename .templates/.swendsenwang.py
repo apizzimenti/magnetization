@@ -7,10 +7,11 @@ from ateams import Chain, Recorder, _version
 import math
 
 # Construct lattice object, model, and chain.
-SCALE = int(sys.argv[-2]) if len(sys.argv) > 1 else 20
-COMPLEX = buildcomplex(3, SCALE, "./../_shared")
+SCALE = int(sys.argv[-2]) if len(sys.argv) > 1 else 4
+COMPLEX = buildcomplex(4, SCALE+1, "./../_shared")
 
 F = 2
+
 MODEL = SwendsenWang(
 	COMPLEX,
 	dimension=COMPLEX.dimension//2,
@@ -18,9 +19,7 @@ MODEL = SwendsenWang(
 	temperature=critical(F)
 )
 
-b = math.sqrt(2)
-L = 42
-N = int(10**(L/math.log(SCALE, b)))
+N = int(min(-(SCALE-128)**3+1000, 2.5e5)) if len(sys.argv) > 1 else 1000
 M = Chain(MODEL, steps=N)
 
 # Metadata.
@@ -32,9 +31,9 @@ output = pathlib.Path(f"./output/tape/{_ROOT}")
 if not output.exists(): output.mkdir()
 
 # Create the recorder.
-with Recorder().record(output/"tape.lz", blocksize=100) as rec:
+with Recorder().record(output/"tape.lz", blocksize=512) as rec:
 	for (spins, occupied, satisfied) in M.progress():
-		rec.store((spins, occupied, satisfied))
+		rec.store((occupied, satisfied))
 
 end = time.time()
 ttc = end-start

@@ -1,6 +1,0 @@
-
-# Provides arguments for the simulation from file.
-while read l; do
-	sbatch simulate.hopper.slurm $l
-done < temps.distribution.txt
-

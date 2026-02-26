@@ -1,5 +1,0 @@
-REMOTEUSER=apizzime
-REMOTELOCATION=gmu-hopper
-REMOTEHOST=hopper
-REMOTEBUILDACTION=hopper.env.sh
-USEREMAIL=apizzime@gmu.edu

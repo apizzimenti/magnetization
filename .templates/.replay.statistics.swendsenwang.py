@@ -1,7 +1,5 @@
 
-from ateams.statistics import Player, constant, totalEnergy, occupancy
-from ateams.models import SwendsenWang
-from construction import buildcomplex
+from ateams.statistics import Player
 from pathlib import Path
 import numpy as np
 import json, sys
@@ -17,34 +15,34 @@ SCALE = METADATA["scale"][0]
 F = METADATA["field"]
 N = METADATA["iterations"]
 
-# Recreate all the variables for the experiment.
-COMPLEX = buildcomplex(len(METADATA["scale"]), SCALE, _root="./../_shared")
-MODEL = SwendsenWang(
-	COMPLEX,
-	dimension=DIM,
-	field=F,
-	temperature=constant(METADATA["temperature"])
-)
+# # Recreate all the variables for the experiment.
+# COMPLEX = buildcomplex(len(METADATA["scale"]), SCALE, _root="./../_shared")
+# MODEL = SwendsenWang(
+# 	COMPLEX,
+# 	dimension=DIM,
+# 	field=F,
+# 	temperature=constant(METADATA["temperature"])
+# )
 
 statistics = [
-	(occupancy, "occupancy"),
-	(totalEnergy, "energy")
+	(lambda O,S: O.sum(), "occupancy"),
+	(lambda O,S: S.shape[0]-(np.count_nonzero(S)), "energy")
 ]
 
 # Specify a burn-in.
-BURN = int(0.25*N)
+BURN = int(0.5*N)
 SAMPLE = N-BURN
 
 # Compute stats, do whatever.
 for statistic, name in statistics:
-	res = np.empty(SAMPLE)
+	res = np.empty(SAMPLE, dtype=int)
 	t = 0
 
 	with Player().playback(ROOT/"tape.lz", steps=N) as play:
-		for state in play.progress():
+		for (occupied, satisfied) in play.progress():
 			if t < BURN: t+=1; continue
 
-			res[t-BURN] = statistic(state, MODEL)
+			res[t-BURN] = statistic(occupied, satisfied)
 			t += 1
 
 	# Write the statistic to file.

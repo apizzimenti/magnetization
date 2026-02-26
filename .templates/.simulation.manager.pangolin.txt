@@ -1,3 +1,2 @@
-#!/bin/zsh
 
-screen -dmS simulation.manager ./simulation.pangolin.sh
+screen -dmS $experiment.simulation.manager ./simulation.pangolin.sh

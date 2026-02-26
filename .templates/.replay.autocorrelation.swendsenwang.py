@@ -25,5 +25,5 @@ for statistic, name in statistics:
 	I = integrated(Z, isNormalized=True);
 
 	np.save(STATS/f"{name}.autocorrelation", Y)
-	np.save(STATS/f"{name}.autocorrelation.normed", Z)
+	np.save(STATS/f"{name}.autocorrelation.normalized", Z)
 	np.save(STATS/f"{name}.autocorrelation.integrated", I)

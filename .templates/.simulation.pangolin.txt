@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 # Run some default number of copies.
 COPIES=${1:-1}
 SCALES=(16 22 32 45 64 90 128)
@@ -26,7 +24,7 @@ for SCALE in "${SCALES[@]}"; do
 		# Kick off a screen job, but WAIT UNTIL IT COMPLETES before starting a
 		# new one, since there aren't a sufficient number of threads to accommodate
 		# multiple jobs at once. (This should make things go faster.)
-		screen -L -Logfile output/tape/$rn/simulation.log -dmS simulation.$rn python simulation.py $SCALE $rn
+		screen -L -Logfile output/tape/$rn/simulation.log -dmS $experiment.simulation.$rn python simulation.py $SCALE $rn
 
 		until [[ -f ./output/tape/$rn/metadata.json ]]; do
 			sleep 5

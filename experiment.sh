@@ -79,6 +79,7 @@ header="${header}\n#SBATCH --mail-user=${USEREMAIL}"
 footer="$(cat $TEMPLATE/.default-slurm-footer.txt)"
 execution="$(cat $TEMPLATE/.lattice.hopper.slurm)"
 footer="${footer}\n\n${execution}"
+zsheader="#!/bin/zsh\nexperiment=${experiment}\n\n"
 
 slurm="${header}\n\n${footer}"
 
@@ -114,10 +115,13 @@ slurm="${header}\n\n${footer}"
 ## Simulation (Pangolin) ##
 ###########################
 pangolin="$(cat $TEMPLATE/.simulation.pangolin.txt)"
+pangolin="${zsheader}${pangolin}"
 echo "$pangolin" >> $directory/simulation.pangolin.sh
 chmod +x $directory/simulation.pangolin.sh
 
 manager="$(cat $TEMPLATE/.simulation.manager.pangolin.txt)"
+manager="${zsheader}${manager}"
+# manager="${manager}\nscreen -dmS simulation.${experiment}.manager ./simulation.pangolin.sh"
 echo "$manager" >> $directory/simulation.manager.pangolin.sh
 chmod +x $directory/simulation.manager.pangolin.sh
 
@@ -135,9 +139,6 @@ footer="${footer}\n\n${execution}"
 hopper="$(cat $TEMPLATE/.replay.hopper.txt)"
 
 slurm="${header}\n\n${footer}"
-# echo "$slurm" >> $directory/replay.hopper.slurm
-# echo "$hopper" >> $directory/replay.hopper.sh
-# chmod +x $directory/replay.hopper.sh
 
 
 
@@ -146,11 +147,13 @@ slurm="${header}\n\n${footer}"
 ## Replay (Pangolin) ##
 #######################
 pangolin="$(cat $TEMPLATE/.replay.pangolin.txt)"
+pangolin="${zsheader}${pangolin}"
 echo "$pangolin" >> $directory/replay.pangolin.sh
 chmod +x $directory/replay.pangolin.sh
 
 
 manager="$(cat $TEMPLATE/.replay.manager.pangolin.txt)"
+manager="${zsheader}${manager}"
 echo "$manager" >> $directory/replay.manager.pangolin.sh
 chmod +x $directory/replay.manager.pangolin.sh
 
@@ -204,3 +207,4 @@ chmod +x $directory/retrieve.sh
 ##################################################################################
 # cd $directory
 # git init
+

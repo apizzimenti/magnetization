@@ -1,12 +1,10 @@
-#!/bin/zsh
-
 mkdir -p output/statistics
 
 # Provides arguments for the replay from file.
 while read -r l; do
 	# Make the stats directory if it doesn't already exist; run the job.
 	mkdir -p output/statistics/$l
-	screen -L -Logfile output/statistics/$l/replay.statistics.log -dmS statistics.$l python replay.statistics.py $l
+	screen -L -Logfile output/statistics/$l/replay.statistics.log -dmS $experiment.statistics.$l python replay.statistics.py $l
 done < timestamps.txt
 
 
@@ -27,6 +25,6 @@ done
 
 while read -r l; do
 	# Compute autocorrelation; this shouldn't take too long.
-	screen -L -Logfile output/statistics/$l/replay.autocorrelation.log -dmS autocorrelation.$l python replay.autocorrelation.py $l
+	screen -L -Logfile output/statistics/$l/replay.autocorrelation.log -dmS $experiment.autocorrelation.$l python replay.autocorrelation.py $l
 done < timestamps.txt
 

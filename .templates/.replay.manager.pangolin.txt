@@ -1,3 +1,2 @@
-#!/bin/zsh
 
-screen -dmS replay.manager ./replay.pangolin.sh
+screen -dmS $experiment.replay.manager ./replay.pangolin.sh
