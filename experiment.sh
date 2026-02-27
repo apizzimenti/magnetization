@@ -42,7 +42,7 @@ mkdir -p $directory/output
 mkdir -p $directory/output/figures
 mkdir -p $directory/output/statistics
 mkdir -p $directory/output/tape
-mkdir -p complexes
+# mkdir -p complexes
 
 
 
