@@ -48,7 +48,7 @@ Creating a streamlined workflow for designing and executing experiments using [A
 	```bash
 	COPIES=${1:-1}		# copies at each scale; takes first cmd arg, default 1
 	SCALES=(4 8 12 16) 	# lattice scales
-	DIM=4				# lattice dimension; default dimension is $DIM/2
+	DIM=4				# lattice dimension; default subcomplex dimension is $DIM//2
 	```
 
 	Change these to suit your needs.
