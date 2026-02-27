@@ -5,11 +5,11 @@ DIMENSION=3
 # SCALES=(16 22)
 
 # Build the complex; wait for it to complete.
-for SCALE in "${SCALES[@]}"; do
-	python construction.py $DIMENSION $SCALE &
-	wait $!
-	echo built complex of scale $SCALE
-done
+# for SCALE in "${SCALES[@]}"; do
+# 	 python construction.py $DIMENSION $SCALE &
+# 	 wait $!
+# 	 echo built complex of scale $SCALE
+# done
 
 rm -f timestamps.txt
 

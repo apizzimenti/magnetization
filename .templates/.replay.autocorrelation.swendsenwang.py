@@ -9,6 +9,8 @@ STAMP = sys.argv[-1] if len(sys.argv) > 1 else "TEST"
 STATS = Path("./output/statistics")/STAMP
 with open(STATS/"metadata.json") as f: METADATA = json.load(f)
 
+if not STATS.exists(): STATS.mkdir()
+
 statistics = [
 	(occupancy, "occupancy"),
 	(totalEnergy, "energy")

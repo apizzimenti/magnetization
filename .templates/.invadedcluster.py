@@ -20,7 +20,8 @@ MODEL = InvadedCluster(
 	stop=lambda: choice([COMPLEX.dimension//2, COMPLEX.dimension//2+1])
 )
 
-N = int(min(-(SCALE-128)**3+1000, 1e5)) if len(sys.argv) > 1 else 1000
+# N = int(min(-(SCALE-128)**3+1000, 1e5)) if len(sys.argv) > 1 else 1000
+N = 100
 M = Chain(MODEL, steps=N)
 
 # Metadata.
@@ -34,7 +35,7 @@ if not output.exists(): output.mkdir()
 # Create the recorder.
 with Recorder().record(output/"tape.lz", blocksize=50) as rec:
 	for (spins, occupied, satisfied) in M.progress():
-		rec.store((spins, occupied, satisfied))
+		rec.store((occupied, satisfied))
 
 end = time.time()
 ttc = end-start

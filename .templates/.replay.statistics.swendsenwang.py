@@ -10,6 +10,8 @@ ROOT = Path("./output/tape")/STAMP
 STATS = Path("./output/statistics")/STAMP
 with open(ROOT/"metadata.json") as f: METADATA = json.load(f)
 
+if not STATS.exists(): STATS.mkdir()
+
 DIM = METADATA["dimension"]
 SCALE = METADATA["scale"][0]
 F = METADATA["field"]
