@@ -58,15 +58,15 @@ Creating a streamlined workflow for designing and executing experiments using [A
 	2. **SSH into Pangolin** and navigate to the directory with your experiment.
 	3. **Start the simulation manager** by running `./simulation.manager.pangolin.sh`. The manager will begin your simulation(s) as background processes using [GNU `screen`](https://linux.die.net/man/1/screen), and will terminate once the last simulation completes. **After you start the manager, you can completely log out of Pangolin. Doing so will not halt your simulations.** You can see currently running simulations using `screen -ls`, and re-attach to a given process using `screen -r <name>`. Each simulation's name is `<experiment name>.<timestamp>`, where `<timestamp>` is the epoch time at which the experiment was started.
 
-	![Image of screen -ls output.](https://github.com/apizzimenti/magnetization/blob/main/.templates/screen.png?raw=true)
+		![Image of screen -ls output.](https://github.com/apizzimenti/magnetization/blob/main/.templates/screen.png?raw=true)
 
-	The above image shows how currently-running simulations and managers appear on Pangolin. (I'm running two `InvadedCluster` and two `SwendsenWang` simulations.) To rejoin one of these processes, I would run
+		The above image shows how currently-running simulations and managers appear on Pangolin. (I'm running two `InvadedCluster` and two `SwendsenWang` simulations.) To rejoin one of these processes, I would run
 
-	```
-	$ screen -r 4torus-invadedcluster-2.simulation.1772147816
-	```
+		```
+		$ screen -r 4torus-invadedcluster-2.simulation.1772147816
+		```
 
-	which would show the progress bar for the simulation. You can detach from the screen *without stopping the simulation* by ctrl+a+d. Once the simulation completes, its output is written to `output/tape/<timestamp>`, and its timestamp is recorded in `timestamps.txt` for later use.
+		which would show the progress bar for the simulation. You can detach from the screen *without stopping the simulation* by ctrl+a+d. Once the simulation completes, its output is written to `output/tape/<timestamp>`, and its timestamp is recorded in `timestamps.txt` for later use.
 
 	4. **Run statistics.** After your simulations complete, log back into Pangolin, navigate to your experiment's directory, and run `./replay.manager.pangolin.sh.` **After you start the manager, you can completely log out of Pangolin. Doing so will not halt the replays.** Much like the simulation manager, the replay manager will replay and compute statistics on all the completed simulations (i.e. all simulations whose timestamps/names are included in the `timestamps.txt` directory) and write output to `output/statistics`. As before, each simulation has its own subdirectory containing its statistical data and metadata.
 
