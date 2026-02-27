@@ -66,7 +66,7 @@ Creating a streamlined workflow for designing and executing experiments using [A
 	$ screen -r 4torus-invadedcluster-2.simulation.1772147816
 	```
 
-	which would show the progress bar for the simulation. Once the simulation completes, its output is written to `output/tape/<timestamp>`, and its timestamp is recorded in `timestamps.txt` for later use.
+	which would show the progress bar for the simulation. You can detach from the screen *without stopping the simulation* by ctrl+a+d. Once the simulation completes, its output is written to `output/tape/<timestamp>`, and its timestamp is recorded in `timestamps.txt` for later use.
 
 	4. **Run statistics.** After your simulations complete, log back into Pangolin, navigate to your experiment's directory, and run `./replay.manager.pangolin.sh.` **After you start the manager, you can completely log out of Pangolin. Doing so will not halt the replays.** Much like the simulation manager, the replay manager will replay and compute statistics on all the completed simulations (i.e. all simulations whose timestamps/names are included in the `timestamps.txt` directory) and write output to `output/statistics`. As before, each simulation has its own subdirectory containing its statistical data and metadata.
 
