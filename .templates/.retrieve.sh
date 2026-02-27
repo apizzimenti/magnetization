@@ -21,5 +21,6 @@ done
 # Set options and exchange files.
 OPTIONS="--verbose --recursive --ignore-existing"
 IGNORE="--exclude-from=.$REMOTEHOST."
+REMOTEROOT="~/"
 
 echo "pulling via rsync from $REMOTEUSER@$REMOTELOCATION with arguments $OPTIONS"

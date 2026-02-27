@@ -21,6 +21,7 @@ done
 # Set options and exchange files.
 OPTIONS="--verbose --human-readable --delete --recursive --update"
 IGNORE="--exclude-from=.$REMOTEHOST.ignore"
+REMOTEROOT="~/"
 
 # Push to both servers, and build.
 echo "pushing to $REMOTEUSER@$REMOTELOCATION via rsync with arguments $OPTIONS and ignoring $IGNORE"
