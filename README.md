@@ -53,7 +53,7 @@ Creating a streamlined workflow for designing and executing experiments using [A
 
 	Change these to suit your needs.
 
-6. **Run your experiment.** Though you *can* run your experiments entirely on your own machine, this workflow is designed for you to...
+6. **Run your experiment.** Though you *can* execute all the steps below on your own machine, the workflow is designed for you to set-and-forget your simulations on a remote machine.
 	1. **Upload the experiment to Pangolin.** (If required — as it is for GMU remote computing resources — connect to the VPN.) In the `experiments/test` directory, run `./update.sh -p` to send a slim copy of these files to the `~/experiments/test` directory on Pangolin. If you want to send your files to a location other than `~/experiments/test`, change the value of `REMOTEROOT` in the `update.sh` and `retrieve.sh` files.
 	2. **SSH into Pangolin** and navigate to the directory with your experiment.
 	3. **Start the simulation manager** by running `./simulation.manager.pangolin.sh`. The manager will begin your simulation(s) as background processes using [GNU `screen`](https://linux.die.net/man/1/screen), and will terminate once the last simulation completes. **After you start the manager, you can completely log out of Pangolin. Doing so will not halt your simulations.** You can see currently running processes using `screen -ls`, and re-attach to a given process using `screen -r <process name>`. Each simulation's name is `<experiment name>.<timestamp>`, where `<timestamp>` is the epoch time at which the experiment was started. These names are configurable in the `simulation.pangolin.sh` file.
