@@ -54,7 +54,7 @@ Creating a streamlined workflow for designing and executing experiments using [A
 	Change these to suit your needs.
 
 6. **Run your experiment.**
-	1. **Upload the experiment to Pangolin.** In the `experiments/test` directory, run `./update.sh -p` to send a slim copy of these files to `~/experiments/test`. If you want to send your files to a different location, change the value of `REMOTEROOT` in the `update.sh` and `retrieve.sh` files.
+	1. **Upload the experiment to Pangolin.** In the `experiments/test` directory, run `./update.sh -p` to send a slim copy of these files to the `~/experiments/test` directory on Pangolin. If you want to send your files to a location other than `~/experiments/test`, change the value of `REMOTEROOT` in the `update.sh` and `retrieve.sh` files.
 	2. **SSH into Pangolin** and navigate to the directory with your experiment.
 	3. **Start the simulation manager** by running `./simulation.manager.pangolin.sh`. The manager will begin your simulation(s) as background processes using [GNU `screen`](https://linux.die.net/man/1/screen), and will terminate once the last simulation completes. **After you start the manager, you can completely log out of Pangolin. Doing so will not halt your simulations.** You can see currently running simulations using `screen -ls`, and re-attach to a given process using `screen -r <name>`. Each simulation's name is `<experiment name>.<timestamp>`, where `<timestamp>` is the epoch time at which the experiment was started.
 
