@@ -24,9 +24,9 @@ OCCUPIED = np.empty((N, RANK))
 with Player().playback(ROOT/"tape.lz", steps=N) as play:
 	t = 0
 
-	for (occupied, satisfied) in play.progress():
+	for (occupied,) in play.progress():
 		occupieds = occupied.reshape((RANK, -1))
-		summed = occupieds.sum(axis=1)/satisfied.sum()
+		summed = occupieds.sum(axis=1)/occupieds.shape[1]
 		OCCUPIED[t] = summed
 		t += 1
 	

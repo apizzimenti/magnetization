@@ -20,7 +20,7 @@ experiment=""
 
 if [ $# -eq 0 ]; then
 	experiment="$(date +%s)"
-	MODEL=swendsenwang
+	MODEL=invasionpercolation
 else
 	experiment=$1
 	MODEL=$(echo $2 | tr "[:upper:]" "[:lower:]")

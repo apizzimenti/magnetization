@@ -4,24 +4,27 @@ from construction import buildcomplex
 from ateams.models import InvadedCluster
 from ateams import Chain, Recorder, _version
 from random import choice
+from math import comb
 
 # Construct lattice object, model, and chain.
-SCALE = int(sys.argv[-2]) if len(sys.argv) > 1 else 16
-COMPLEX = buildcomplex(3, SCALE, "./../_shared")
+SCALE = int(sys.argv[-3]) if len(sys.argv) > 1 else 16
+DIMENSION = int(sys.argv[-2]) if len(sys.argv) > 1 else 3
+COMPLEX = buildcomplex(DIMENSION, SCALE, "./../_shared")
 
 F = 2
-FULL = False
+FULL = True
+RANK = comb(COMPLEX.dimension, COMPLEX.dimension//2)
 
 MODEL = InvadedCluster(
 	COMPLEX,
 	dimension=COMPLEX.dimension//2,
 	field=F,
 	full=FULL,
-	stop=lambda: choice([COMPLEX.dimension//2, COMPLEX.dimension//2+1])
+	stop=lambda: choice([RANK//2+1, RANK//2])
 )
 
 # N = int(min(-(SCALE-128)**3+1000, 1e5)) if len(sys.argv) > 1 else 1000
-N = 100
+N = 5000
 M = Chain(MODEL, steps=N)
 
 # Metadata.
@@ -33,7 +36,7 @@ output = pathlib.Path(f"./output/tape/{_ROOT}")
 if not output.exists(): output.mkdir()
 
 # Create the recorder.
-with Recorder().record(output/"tape.lz", blocksize=50) as rec:
+with Recorder().record(output/"tape.lz", blocksize=100) as rec:
 	for (spins, occupied, satisfied) in M.progress():
 		rec.store((occupied, satisfied))
 
@@ -67,5 +70,6 @@ with open(str(output/"metadata.json"), "w") as w:
 	metadata["periodic"] = int(COMPLEX.periodic)
 	metadata["model"] = MODEL._name
 	metadata["full"] = FULL
+	metadata["rank"] = RANK
 	
 	json.dump(metadata, w, indent=2)

@@ -1,12 +1,11 @@
 # Run some default number of copies.
 COPIES=${1:-1}
 SCALES=(16 22 32 45 64 90 128)
-DIMENSION=3
-# SCALES=(16 22)
+DIM=3
 
 # Build the complex; wait for it to complete.
 # for SCALE in "${SCALES[@]}"; do
-# 	 python construction.py $DIMENSION $SCALE &
+# 	 python construction.py $DIM $SCALE &
 # 	 wait $!
 # 	 echo built complex of scale $SCALE
 # done
@@ -24,7 +23,7 @@ for SCALE in "${SCALES[@]}"; do
 		# Kick off a screen job, but WAIT UNTIL IT COMPLETES before starting a
 		# new one, since there aren't a sufficient number of threads to accommodate
 		# multiple jobs at once. (This should make things go faster.)
-		screen -L -Logfile output/tape/$rn/simulation.log -dmS $experiment.simulation.$rn python simulation.py $SCALE $rn
+		screen -L -Logfile output/tape/$rn/simulation.log -dmS $experiment.simulation.$rn python simulation.py $SCALE $DIM $rn
 
 		until [[ -f ./output/tape/$rn/metadata.json ]]; do
 			sleep 5

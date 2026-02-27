@@ -27,7 +27,7 @@ for STAMP in STAMPS:
 	N = METADATA["iterations"]
 	RANK = METADATA["rank"]//2
 	q = METADATA["field"]
-	z = np.sqrt(q)/(1+np.sqrt(q))
+	z = 1/2
 
 	# Load occupation data.
 	OCCUPATION = np.load(STATS/STAMP/"occupation.npy").reshape((-1,N))[:,1:N+1]
@@ -35,7 +35,7 @@ for STAMP in STAMPS:
 
 	# Create blank plots, set aspect ratio, limits, etc.
 	fig, ax = plt.subplots(figsize=(5,3))
-	ax.set_ylim(0.54, 0.66)
+	ax.set_ylim(0.48, 0.52)
 	ax.set_xlim(0, N)
 	ax.spines[["right", "top"]].set_visible(False)
 

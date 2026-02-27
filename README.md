@@ -30,6 +30,7 @@ Creating a streamlined workflow for designing and executing experiments using [A
 
 	* [`InvadedCluster`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.InvadedCluster)
 	* [`SwendsenWang`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.SwendsenWang)
+	* [`InvasionPercolation`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.InvasionPercolation)
 
 	To create an experiment, navigate to the `magnetization` directory and run `./experiment <name> <model>`. For example, creating an experiment called `test` using the (e.g.) `InvadedCluster` ATEAMS model looks like
 

@@ -1,26 +1,27 @@
 
 import dateutil.relativedelta, time, datetime, json, pathlib, sys, platform
 from construction import buildcomplex
-from ateams.models import SwendsenWang
-from ateams.statistics import critical
+from ateams.models import InvasionPercolation
 from ateams import Chain, Recorder, _version
-import math
+from random import choice
+from math import comb
 
 # Construct lattice object, model, and chain.
 SCALE = int(sys.argv[-3]) if len(sys.argv) > 1 else 16
 DIMENSION = int(sys.argv[-2]) if len(sys.argv) > 1 else 3
 COMPLEX = buildcomplex(DIMENSION, SCALE, "./../_shared")
 
-F = 2
+FULL = True
+RANK = comb(COMPLEX.dimension, COMPLEX.dimension//2)
 
-MODEL = SwendsenWang(
+MODEL = InvasionPercolation(
 	COMPLEX,
 	dimension=COMPLEX.dimension//2,
-	field=F,
-	temperature=critical(F)
+	full=FULL
 )
 
-N = int(min(-(SCALE-128)**3+1000, 2.5e5)) if len(sys.argv) > 1 else 1000
+# N = int(min(-(SCALE-128)**3+1000, 1e5)) if len(sys.argv) > 1 else 1000
+N = 1000
 M = Chain(MODEL, steps=N)
 
 # Metadata.
@@ -32,9 +33,9 @@ output = pathlib.Path(f"./output/tape/{_ROOT}")
 if not output.exists(): output.mkdir()
 
 # Create the recorder.
-with Recorder().record(output/"tape.lz", blocksize=512) as rec:
-	for (spins, occupied, satisfied) in M.progress():
-		rec.store((occupied, satisfied))
+with Recorder().record(output/"tape.lz", blocksize=50) as rec:
+	for (occupied) in M.progress():
+		rec.store((occupied,))
 
 end = time.time()
 ttc = end-start
@@ -61,10 +62,11 @@ with open(str(output/"metadata.json"), "w") as w:
 	metadata["iterations"] = N
 	metadata["complex"] = COMPLEX._name
 	metadata["scale"] = COMPLEX.corners
-	metadata["dimension"] = COMPLEX.dimension
+	metadata["dimension"] = COMPLEX.dimension//2
 	metadata["field"] = MODEL.field
 	metadata["periodic"] = int(COMPLEX.periodic)
 	metadata["model"] = MODEL._name
-	metadata["temperature"] = critical(F)(0)
-
+	metadata["full"] = FULL
+	metadata["rank"] = RANK
+	
 	json.dump(metadata, w, indent=2)
