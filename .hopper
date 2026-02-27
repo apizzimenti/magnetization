@@ -1,5 +1,4 @@
 REMOTEUSER=apizzime
 REMOTELOCATION=gmu-hopper
 REMOTEHOST=hopper
-REMOTEBUILDACTION=hopper.env.cython.sh
 USEREMAIL=apizzime@gmu.edu

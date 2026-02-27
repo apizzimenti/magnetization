@@ -1,6 +1,6 @@
 
 */**/__pycache__
-.DS_Store
+*.DS_Store
 *.pytest*
 *.python_version
 .git
@@ -16,8 +16,7 @@ output/figures
 scripts
 .lattice.lattice.npz
 lattice.json
-.pangolin
-.pangolin.ignore
+*.pangolin*
 .hopper
 .hopper.ignore
 
@@ -27,4 +26,3 @@ lattice.json
 update.sh
 retrieve.sh
 summary.md
-timestamps.txt

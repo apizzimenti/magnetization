@@ -32,7 +32,7 @@ mkdir -p $directory
 ########################################################################
 ## Load arguments from the outer config file to get the user's email. ##
 ########################################################################
-source $TEMPLATE/.pangolin && export $(grep --regexp ^[A-Z] $TEMPLATE/.pangolin | cut -d= -f1)
+# source $TEMPLATE/.pangolin && export $(grep --regexp ^[A-Z] $TEMPLATE/.pangolin | cut -d= -f1)
 
 
 ##############################################
@@ -170,10 +170,10 @@ cp -r $TEMPLATE/.scripts $directory/scripts
 cp $TEMPLATE/.replay.statistics.$MODEL.py $directory/replay.statistics.py
 cp $TEMPLATE/.replay.autocorrelation.$MODEL.py $directory/replay.autocorrelation.py
 cp $TEMPLATE/.summary.md $directory/summary.md
-# cp $TEMPLATE/.hopper $directory/.hopper
-# cp $TEMPLATE/.hopper.ignore $directory/.hopper.ignore
-cp $TEMPLATE/.pangolin $directory/.pangolin
-cp $TEMPLATE/.pangolin.ignore $directory/.pangolin.ignore
+cp .hopper $directory/.hopper
+cp .hopper.ignore $directory/.hopper.ignore
+cp .pangolin $directory/.pangolin
+cp .pangolin.ignore $directory/.pangolin.ignore
 cp $TEMPLATE/.template.gitignore $directory/.gitignore
 
 # Title the experiment file.

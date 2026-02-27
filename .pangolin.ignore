@@ -1,18 +1,30 @@
 
-ATEAMS
-libraries
-experiments
-.templates
-
-Papers
-Talks
-
-.git*
+*/**/__pycache__
+.DS_Store
+*.pytest*
+*.python_version
 .git
-*.DS_Store
+.git*
+*.jpeg
+*.png
+*.gif
 
-*.md
-.hopper*
-.pangolin*
-*.sh
+output/tape/*
+output/statistics/*
+output/figures
 
+scripts
+.lattice.lattice.npz
+lattice.json
+.pangolin
+.pangolin.ignore
+.hopper
+.hopper.ignore
+
+.vscode
+*.egg-info
+
+update.sh
+retrieve.sh
+summary.md
+timestamps.txt

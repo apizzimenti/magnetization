@@ -2,10 +2,6 @@
 .vscode
 .DS_Store
 
-# Ignore hopper stuff for now.
-.hopper.*
-.templates/*.hopper*
-
 Talks/
 Papers/
 libraries/
