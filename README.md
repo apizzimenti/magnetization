@@ -46,9 +46,9 @@ Creating a streamlined workflow for designing and executing experiments using [A
 5. **Configure your experiment.** The `simulation.pangolin.sh` file executes (a configurable number of repetitions of) your experiment at varying lattice scales. At the top of the `simulation.pangolin.sh` file, you'll find the following variables:
 
 	```bash
-	COPIES=${1:-1}		# takes the first arg passed to the script; default 1
-	SCALES=(4 8 12 16) 	# runs $COPIES copies on lattices of these dims
-	DIM=4				# lattice dimension; default sim dimension is $DIM/2
+	COPIES=${1:-1}		# copies at each scale; takes first cmd arg, default 1
+	SCALES=(4 8 12 16) 	# lattice scales
+	DIM=4				# lattice dimension; default dimension is $DIM/2
 	```
 
 	Change these to suit your needs.
