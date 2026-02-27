@@ -1,7 +1,7 @@
 # Run some default number of copies.
 COPIES=${1:-1}
-SCALES=(16 22 32 45 64 90 128)
-DIM=3
+SCALES=(4 6 8)
+DIM=4
 
 # Build the complex; wait for it to complete.
 # for SCALE in "${SCALES[@]}"; do
