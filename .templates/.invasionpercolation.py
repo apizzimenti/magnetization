@@ -3,12 +3,11 @@ import dateutil.relativedelta, time, datetime, json, pathlib, sys, platform
 from construction import buildcomplex
 from ateams.models import InvasionPercolation
 from ateams import Chain, Recorder, _version
-from random import choice
 from math import comb
 
 # Construct lattice object, model, and chain.
-SCALE = int(sys.argv[-3]) if len(sys.argv) > 1 else 16
-DIMENSION = int(sys.argv[-2]) if len(sys.argv) > 1 else 3
+SCALE = int(sys.argv[-3]) if len(sys.argv) > 1 else 3
+DIMENSION = int(sys.argv[-2]) if len(sys.argv) > 1 else 2
 COMPLEX = buildcomplex(DIMENSION, SCALE, "./../_shared")
 
 FULL = True
@@ -21,7 +20,7 @@ MODEL = InvasionPercolation(
 )
 
 # N = int(min(-(SCALE-128)**3+1000, 1e5)) if len(sys.argv) > 1 else 1000
-N = 1000
+N = 10
 M = Chain(MODEL, steps=N)
 
 # Metadata.
@@ -34,8 +33,8 @@ if not output.exists(): output.mkdir()
 
 # Create the recorder.
 with Recorder().record(output/"tape.lz", blocksize=50) as rec:
-	for (occupied) in M.progress():
-		rec.store((occupied,))
+	for (occupied, essential, total, pairs) in M.progress():
+		rec.store((occupied, essential, total, pairs))
 
 end = time.time()
 ttc = end-start
@@ -63,10 +62,11 @@ with open(str(output/"metadata.json"), "w") as w:
 	metadata["complex"] = COMPLEX._name
 	metadata["scale"] = COMPLEX.corners
 	metadata["dimension"] = COMPLEX.dimension//2
-	metadata["field"] = MODEL.field
 	metadata["periodic"] = int(COMPLEX.periodic)
 	metadata["model"] = MODEL._name
 	metadata["full"] = FULL
 	metadata["rank"] = RANK
+	metadata["cells"] = MODEL.cellCount
+	metadata["tranches"] = COMPLEX.tranches.tolist()
 	
 	json.dump(metadata, w, indent=2)
