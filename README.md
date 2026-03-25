@@ -31,6 +31,7 @@ Creating a streamlined workflow for designing and executing experiments using [A
 	* [`InvadedCluster`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.InvadedCluster)
 	* [`SwendsenWang`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.SwendsenWang)
 	* [`InvasionPercolation`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.InvasionPercolation)
+	* [`Bernoulli`](https://apizzimenti.github.io/ATEAMS/models/index.html#ateams.models.Bernoulli)
 
 	To create an experiment, navigate to the `magnetization` directory and run `./experiment <name> <model>`. For example, creating an experiment called `test` using the (e.g.) `InvadedCluster` ATEAMS model looks like
 
@@ -67,9 +68,9 @@ Creating a streamlined workflow for designing and executing experiments using [A
 		$ screen -r 4torus-invadedcluster-2.simulation.1772147816
 		```
 
-		command, which would show the progress bar for the simulation. You can detach from the screen *without stopping the simulation* by inputting ctrl+a+d. Once the simulation completes, its output is written to `output/tape/<timestamp>`, and its timestamp is recorded in `timestamps.txt` for later use.
+		command, which would show the progress bar for the simulation. You can detach from the screen *without stopping the simulation* by inputting ctrl+a+d. Once the simulation completes, its output is written to `output/tape/<timestamp>`, and its timestamp is recorded in `completed.txt` for later use.
 
-	4. **Run statistics.** After your simulations complete, log back into Pangolin, navigate to your experiment's directory, and run `./replay.manager.pangolin.sh`. **After you start the manager, you can completely log out of Pangolin. Doing so will not halt the replays.** Much like the simulation manager, the replay manager will replay and compute statistics on all the completed simulations (i.e. all simulations whose timestamps/names are included in the `timestamps.txt` directory) as background processes and write output to `output/statistics`. As before, each simulation has its own subdirectory containing its statistical data and metadata.
+	4. **Run statistics.** After your simulations complete, log back into Pangolin, navigate to your experiment's directory, and run `./replay.manager.pangolin.sh`. **After you start the manager, you can completely log out of Pangolin. Doing so will not halt the replays.** Much like the simulation manager, the replay manager will replay and compute statistics on all the completed simulations (i.e. all simulations whose timestamps/names are included in the `completed.txt` file) as background processes and write output to `output/statistics`. As before, each simulation has its own subdirectory containing its statistical data and metadata.
 
 	* **Notes on performance:** if you think your simulations or replays are taking too long, run the `top` command to see how Pangolin's resources are being allocated to different processes. It's likely that another user is running simulations at the same time, which can significantly gum things up. To kill a `screen` process, run
 
