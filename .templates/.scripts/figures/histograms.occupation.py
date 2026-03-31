@@ -4,14 +4,14 @@ import json
 from pathlib import Path
 import matplotlib.pyplot as plt
 
-from config import KDE
+from config import histograms
 
 # Turn on latex.
-plt.rcParams.update(**KDE.layered.rcParams)
+plt.rcParams.update(**histograms.occupation.rcParams)
 
 ROOT = Path("./../../")
 STATS = ROOT/"output/statistics"
-OUT = ROOT/"output/figures/bettis"
+OUT = ROOT/"output/figures"
 TEST = False
 
 if not OUT.exists(): OUT.mkdir()
@@ -33,34 +33,24 @@ for STAMP in STAMPS:
 
 	# Load betti curve data. Get histogram data for each rank.
 	giants = np.load(STATS/STAMP/"percentages.npy")
-	histograms = KDE.layered.histograms(giants, RANK)
+	Ys = histograms.occupation.histograms(giants, RANK)
 	X = np.linspace(0, 1, num=2048)
-	Ys = KDE.layered.pdfs(histograms, X)
+	Zs = histograms.occupation.pdfs(Ys, X)
 
 	rev = list(range(RANK))
 
 	# Create a layered plot with all the histograms on top of each other.
-	fig, ax = plt.subplots(figsize=KDE.layered.figsize)
-	colors = KDE.layered.colors(RANK)
+	fig, ax = plt.subplots(figsize=histograms.occupation.figsize)
+	colors = histograms.occupation.colors(RANK)
 	
 	for i in rev:
-		Y = Ys[i]
-		ax.plot(X, Y, lw=1/2, alpha=1/2, color=colors[i])
-		ax.fill_between(X, Y, alpha=1/2, color=colors[i], lw=0)
+		Z = Zs[i]/N
+		ax.plot(X, Z, lw=1/2, alpha=1/2, color=colors[i])
+		ax.fill_between(X, Z, alpha=1/2, color=colors[i], lw=0)
 
 		# Find the x-coordinate of the max value of Y?
-		ax.text(1/2, Y[Y.shape[0]//2], rf"${i+1}$", fontsize=4, alpha=3/4, ha="right", va="top")
+		ax.text(1/2, Z[Z.shape[0]//2], rf"${i+1}$", fontsize=4, alpha=3/4, ha="right", va="top")
 	
-	ax.set_xlim(*KDE.layered.xlim)
-	plt.savefig(OUT/KDE.layered.name(L), **KDE.layered.savefig)
-
-
-	for i in rev:
-		fig, ax = plt.subplots(figsize=KDE.single.figsize)
-		ax.plot(X, Ys[i], lw=1/2, alpha=1/2, color=colors[-1])
-		ax.fill_between(X, Ys[i], alpha=1/2, color=colors[-1], lw=0)
-		# ax.set_xlim(*KDE.single.xlim)
-
-		plt.savefig(OUT/KDE.single.name(i+1,L), **KDE.single.savefig)
-		plt.close()
-		plt.clf()
+	ax.set_xlim(*histograms.occupation.xlim)
+	plt.savefig(OUT/histograms.occupation.name(L), **histograms.occupation.savefig)
+	
