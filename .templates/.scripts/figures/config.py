@@ -1,6 +1,8 @@
 
 from ateams.common import Bunch
+from scipy.stats import gaussian_kde
 import numpy as np
+import seaborn as sns
 
 
 ################################################################################
@@ -98,6 +100,39 @@ autocorrelation.decay.xticks = lambda ax, X: xticks(ax, X)
 
 autocorrelation.decay.name = lambda statistic, L: f"autocorrelation.decay.{statistic}.{L}.png"
 autocorrelation.decay.savefig = dict(
+	dpi=plot.dpi,
+	bbox_inches=plot.bbox_inches
+)
+
+################################################################################
+### HISTOGRAMS/KDES ############################################################
+################################################################################
+KDE = Bunch()
+
+KDE.layered = Bunch()
+KDE.layered.rcParams = plot.rcParams
+KDE.layered.figsize = plot.figsize
+KDE.layered.colors = lambda n: sns.light_palette("seagreen", n_colors=n)
+KDE.layered.histograms = lambda X, rank: [X[:,r][X[:,r]>0] for r in range(rank)]
+KDE.layered.pdfs = lambda histograms, X: np.array([gaussian_kde(h)(X) for h in histograms])
+
+KDE.layered.xlim = (0.48, 0.51)
+
+KDE.layered.name = lambda L: f"KDE.layered.{L}.png"
+KDE.layered.savefig = dict(
+	dpi=plot.dpi,
+	bbox_inches=plot.bbox_inches
+)
+
+
+KDE.single = Bunch()
+
+KDE.single.figsize = plot.figsize
+
+KDE.single.xlim = (0.3, 0.55)
+
+KDE.single.name = lambda L, i: f"KDE.layered.{i}.{L}.png"
+KDE.single.savefig = dict(
 	dpi=plot.dpi,
 	bbox_inches=plot.bbox_inches
 )

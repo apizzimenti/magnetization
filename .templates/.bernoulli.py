@@ -7,8 +7,8 @@ from ateams import Chain, Recorder, _version
 from math import comb
 
 # Construct lattice object, model, and chain.
-SCALE = int(sys.argv[-3]) if len(sys.argv) > 1 else 10
-DIMENSION = int(sys.argv[-2]) if len(sys.argv) > 1 else 2
+SCALE = int(sys.argv[-3]) if len(sys.argv) > 1 else 8
+DIMENSION = int(sys.argv[-2]) if len(sys.argv) > 1 else 4
 COMPLEX = buildcomplex(DIMENSION, SCALE, "./../_shared")
 
 RANK = comb(COMPLEX.dimension, COMPLEX.dimension//2)
@@ -18,7 +18,6 @@ MODEL = Bernoulli(
 	dimension=COMPLEX.dimension//2
 )
 
-# N = int(min(-(SCALE-128)**3+1000, 1e5)) if len(sys.argv) > 1 else 1000
 N = 1000
 M = Chain(MODEL, steps=N)
 
@@ -31,16 +30,17 @@ output = pathlib.Path(f"./output/tape/{_ROOT}")
 if not output.exists(): output.mkdir()
 
 # Create the recorder.
-with Recorder().record(output/"tape.lz", blocksize=50) as rec:
+with Recorder().record(output/"tape.lz", blocksize=100) as rec:
 	# The times that the giant cycles appear aren't important (since there's no
 	# sense of a filtration), just their number. As such, we have to do a little
 	# hack.
-	L = np.zeros(shape=1)
 	for (occupied, giants) in M.progress():
-		L[0] = len(giants)
-
+		giants.sort()
+		L = np.zeros(shape=RANK, dtype=int)
+		L[:giants.shape[0]] = giants
+		
 		# We could even ignore the "occupied" data?
-		rec.store((occupied,L))
+		rec.store((occupied.astype(int), L))
 
 end = time.time()
 ttc = end-start

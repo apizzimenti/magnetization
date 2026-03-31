@@ -22,17 +22,20 @@ TRANCHES = np.array(METADATA["tranches"])
 
 OCCUPIED = np.empty(N, dtype=np.float64)
 GIANTS = np.empty(N, dtype=int)
+PERCENTAGES = np.zeros((N, RANK), dtype=np.float64)
 
 with Player().playback(ROOT/"tape.lz", steps=N, dtypes=(np.uint8, int)) as play:
 	t = 0
 
 	for (occupied, giants) in play.progress():
 		OCCUPIED[t] = occupied.sum()/occupied.shape[0]
-		GIANTS[t] = giants[0]
+		GIANTS[t] = (giants[giants > 0]).shape[0]
+		PERCENTAGES[t,:GIANTS[t]] = ((giants-TRANCHES[DIM,0])/occupied.shape[0])[:GIANTS[t]]
 		t += 1
 	
 	np.save(STATS/"occupation", OCCUPIED)
 	np.save(STATS/"giants", GIANTS)
+	np.save(STATS/"percentages", PERCENTAGES)
 
 
 with open(STATS/"metadata.json", "w") as w: json.dump(METADATA, w, indent=2)
