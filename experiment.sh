@@ -188,13 +188,13 @@ echo "## \`$experiment\`" >> $directory/summary.md
 ## remote machines, as these files expect to find SSH keys attached.            ##
 ##################################################################################
 footer="$(cat $TEMPLATE/.update.sh)"
-footer="${footer}\n\nrsync \$OPTIONS \$IGNORE ./ \$REMOTEUSER@\$REMOTELOCATION:\$REMOTEROOT/${directory:2}"
+footer="${footer}\n\nrsync \$OPTIONS \$IGNORE ./ \$REMOTEUSER@\$REMOTELOCATION:\$REMOTEROOT/experiments/${directory:2}"
 echo "$footer" >> $directory/update.sh
 chmod +x $directory/update.sh
 
 footer="$(cat $TEMPLATE/.retrieve.sh)"
-footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:\$REMOTEROOT/${experiment}/output/statistics/ ./output/statistics/"
-footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:\$REMOTEROOT/${experiment}/timestamps.txt ./timestamps.txt"
+footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:\$REMOTEROOT/experiments/${experiment}/output/statistics/ ./output/statistics/"
+footer="${footer}\nrsync \$OPTIONS \$REMOTEUSER@\$REMOTELOCATION:\$REMOTEROOT/experiments/${experiment}/completed.txt ./completed.txt"
 echo "$footer" >> $directory/retrieve.sh
 chmod +x $directory/retrieve.sh
 

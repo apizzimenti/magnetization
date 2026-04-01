@@ -17,7 +17,7 @@ TEST = False
 if not OUT.exists(): OUT.mkdir()
 
 try:
-	with open(ROOT/"timestamps.txt") as f: STAMPS = [s.strip() for s in f.readlines()]
+	with open(ROOT/"completed.txt") as f: STAMPS = [s.strip() for s in f.readlines()]
 	assert len(STAMPS) > 0
 	assert not TEST
 except:
@@ -49,7 +49,8 @@ for STAMP in STAMPS:
 		ax.fill_between(X, Z, alpha=1/2, color=colors[i], lw=0)
 
 		# Find the x-coordinate of the max value of Y?
-		ax.text(1/2, Z[Z.shape[0]//2], rf"${i+1}$", fontsize=4, alpha=3/4, ha="right", va="top")
+		mm = Z.argmax()
+		ax.text(X[mm], Z[mm], rf"${i+1}$", fontsize=4, alpha=3/4, ha="right", va="top")
 	
 	ax.set_xlim(*histograms.occupation.xlim)
 	plt.savefig(OUT/histograms.occupation.name(L), **histograms.occupation.savefig)
